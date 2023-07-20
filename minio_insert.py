@@ -1,13 +1,22 @@
 import pandas as pd
 import boto3
 from io import StringIO 
-# data = pd.read_csv('/home/thanhnb/test.csv')
-with open("/home/thanhnb/test.csv", "r", encoding="utf-8") as f:
-    data = f.read()
-# print(data.head())
-# csv_buffer = StringIO()
+import csv
+from minio import Minio
+import datetime
+from io import BytesIO
 
-# data.to_csv(csv_buffer)
+
+# data = pd.read_csv('/home/thanhnb/school_10_2019.csv',sep="|", quotechar='"') 
+
+
+
+file_path = '/home/thanhnb/export_lop10_new.csv'
+
+
+with open(file_path, "r", encoding="utf-8") as f:
+    data = f.read()
+    
 
 client = boto3.client(
         "s3",
@@ -17,8 +26,10 @@ client = boto3.client(
     )
 client.put_object(
             Bucket='thanhnb',
-            Key='cdp/cdp_1/test12.csv',
+            Key='cdp/cdp_1/export_lop10_new.csv',
             Body=data,
         )
 
-print("ok")
+print("ok") 
+
+
